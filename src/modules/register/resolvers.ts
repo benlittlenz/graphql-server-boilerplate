@@ -1,11 +1,10 @@
-import { User } from "./entity/User";
-import { ResolverMap } from "./types/graphql-utils";
 import * as bcrypt from "bcryptjs";
+import { ResolverMap } from "../../types/graphql-utils";
+import { User } from "../../entity/User";
 
 export const resolvers: ResolverMap = {
   Query: {
-    hello: (_: any, { name }: GQL.IHelloOnQueryArguments) =>
-      `Hello ${name || "World"}`,
+    bye: () => "Hi",
   },
   Mutation: {
     register: async (
@@ -17,7 +16,7 @@ export const resolvers: ResolverMap = {
         email,
         password: hashedPasword,
       });
-      await user.save()
+      await user.save();
       return true;
     },
   },
