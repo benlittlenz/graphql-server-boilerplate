@@ -10,8 +10,8 @@ beforeAll(async () => {
   getHost = () => `http://127.0.0.1:${port}`;
 });
 
-const email = "jim@bob.com";
-const password = "123abc";
+const email = "jim2@mail.com";
+const password = "133332";
 
 const mutation = `
   mutation {
@@ -31,7 +31,9 @@ test("Register User", async () => {
   expect(user.email).toEqual(email);
   expect(user.password).not.toEqual(password);
 
-  // const res2: any = await request(getHost(), mutation);
-  // expect(res2.register).toHaveLength(1);
-  // expect(res2.register[0].path).toEqual("email");
+  const res2: any = await request(getHost(), mutation);
+  expect(res2.register).toHaveLength(1);
+  expect(res2.register[0].path).toEqual("email");
+
+  
 });
