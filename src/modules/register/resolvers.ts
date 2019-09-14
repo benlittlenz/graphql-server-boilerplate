@@ -4,16 +4,17 @@ import { User } from "../../entity/User";
 import * as yup from "yup";
 
 import { formatError } from "../../utils/formatError";
+import { duplicateEmail, emailNotLongEnough, invalidEmail, passwordNotLongEnough } from "./errorMessages";
 
 const schema = yup.object().shape({
   email: yup
     .string()
-    .min(3)
+    .min(3, emailNotLongEnough)
     .max(255)
-    .email(),
+    .email(invalidEmail),
   password: yup
     .string()
-    .min(3)
+    .min(3, passwordNotLongEnough)
     .max(255),
 });
 
@@ -37,7 +38,7 @@ export const resolvers: ResolverMap = {
         return [
           {
             path: "email",
-            message: "Already Taken",
+            message: duplicateEmail,
           },
         ];
       }

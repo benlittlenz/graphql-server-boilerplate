@@ -1,0 +1,5 @@
+export const duplicateEmail = "Already Taken"
+export const emailNotLongEnough = "email must be atleast 3 characters"
+export const passwordNotLongEnough = "Password must be at least 3 characters"
+export const invalidEmail = "email must be a valid email"
+export const invalidPassword = ""
