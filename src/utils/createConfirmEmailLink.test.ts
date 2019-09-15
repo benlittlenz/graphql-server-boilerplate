@@ -26,9 +26,7 @@ test("Make sure confirms user and clear key in redis", async () => {
   const text = await response.text();
   expect(text).toEqual("ok");
   const user = await User.findOne({ where: { id: userId } });
-  if (user) {
-    expect(user.confirmed).toBeTruthy();
-  }
+  expect((user as User).confirmed).toBeTruthy();
   const chunks = url.split("/");
   const key = chunks[chunks.length - 1];
   const value = await redis.get(key);
