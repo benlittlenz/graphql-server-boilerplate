@@ -1,4 +1,4 @@
-// tslint:disable
+  // tslint:disable
 // graphql typescript definitions
 
 declare namespace GQL {
