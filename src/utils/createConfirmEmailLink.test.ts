@@ -1,3 +1,4 @@
+import { Connection } from "typeorm";
 import * as Redis from "ioredis";
 import fetch from "node-fetch";
 import { User } from "../entity/User";
@@ -7,14 +8,21 @@ import { createTypeormConnection } from "./createTypeormConnect";
 let userId = "";
 let redis = new Redis();
 
+let conn: Connection;
+
 beforeAll(async () => {
-  await createTypeormConnection();
+  conn = await createTypeormConnection();
   const user = await User.create({
     email: "bob12@bob.com",
     password: "fgdzgkdf",
   }).save();
   userId = user.id;
 });
+
+afterAll(async () => {
+  conn.close();
+});
+
 test("Make sure confirms user and clear key in redis", async () => {
   const url = await createConfirmEmailLink(
     process.env.TEST_HOST as string,
