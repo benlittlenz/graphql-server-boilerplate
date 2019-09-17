@@ -8,6 +8,7 @@ import {
   passwordNotLongEnough,
 } from "../modules/register/errorMessages";
 import { createTypeormConnection } from "../utils/createTypeormConnect";
+import { Connection } from "typeorm";
 
 const email = "jim2@mail.com";
 const password = "133332";
@@ -21,8 +22,14 @@ const mutation = (e: string, p: string) => `
   }
 `;
 
+let conn: Connection;
+
 beforeAll(async () => {
-  await createTypeormConnection()
+  conn = await createTypeormConnection()
+})
+
+afterAll(async () => {
+  conn.close()
 })
 
 describe("Register User", async () => {

@@ -1,3 +1,4 @@
+import { Connection } from 'typeorm';
 import { createTypeormConnection } from "./../../utils/createTypeormConnect";
 import { User } from "./../../entity/User";
 import { invalidLogin, confirmEmail } from "./errorMessages";
@@ -39,9 +40,15 @@ const loginExpectError = async (e: string, p: string, errMsg: string) => {
   });
 };
 
+let conn: Connection;
+
 beforeAll(async () => {
-  await createTypeormConnection();
-});
+  conn = await createTypeormConnection()
+})
+
+afterAll(async () => {
+  conn.close()
+})
 
 describe("login", async () => {
   test("email not found", async () => {

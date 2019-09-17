@@ -22,7 +22,9 @@ export const startServer = async () => {
 
   server.express.use(
     session({
-      store: new RedisStore({}),
+      store: new RedisStore({
+        client: redis as any
+      }),
       name: "qid",
       secret: SESSION_SECRET,
       resave: false,
@@ -37,7 +39,7 @@ export const startServer = async () => {
 
   const cors = {
     credentials: true,
-    origin: "http://localhost:3000"
+    origin: process.env.FRONTEND_HOST as string
   };
 
   server.express.get("/confirm/:id", confirmEmail);
